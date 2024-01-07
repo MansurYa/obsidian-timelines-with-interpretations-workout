@@ -19,7 +19,13 @@ export const DEFAULT_SETTINGS: TimelinesSettings = {
     sortDirection: true,
 	notePreviewOnHover: true,
 	frontmatterKeys: DEFAULT_FRONTMATTER_KEYS,
-	era: [' BC',' AD']
+	era: [' BC',' AD'],
+	fontSize: 14,
+	scaleTheWidthOfEventBlocks: 1,
+	minCardWidth: 180,
+	cardHeight: 290,
+	coefficentCompressionOfBlocks: 0.4,
+	maxNumberOfRowsInblocks: 2,
 }
 
 export interface Args {

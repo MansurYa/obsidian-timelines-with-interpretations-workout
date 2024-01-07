@@ -1,22 +1,36 @@
 # obsidian Timelines
 Generate a chronological timeline of all notes with the specified set of tags. 
 
-## Example - Vertical Timeline
+## Examples
+
+#### Timeline with interpretation (1 row)
+
+![exemple](https://raw.githubusercontent.com/MansurYa/obsidian-timelines-with-interpretations-workout/main/images/exp_0_interp_demon_1.png)
+
+#### Timeline with interpretation (2 rows)
+
+![example](https://raw.githubusercontent.com/MansurYa/obsidian-timelines-with-interpretations-workout/main/images/exp_0_interp_demon_2.png)
+
+
+#### Vertical Timeline
+
 ![example](https://raw.githubusercontent.com/Darakah/obsidian-timelines/main/images/exp_2.png)
 
-## Example - Horizantal Timeline
-![example](https://raw.githubusercontent.com/Darakah/obsidian-timelines/main/images/TimelineVis.png)
+#### Horizantal Timeline
 
+![example](https://raw.githubusercontent.com/Darakah/obsidian-timelines/main/images/TimelineVis.png)
 ## Inserting a Timeline Event
 
 VIDEO BRIEF EXAMPLE: https://www.youtube.com/watch?v=_gtpZDXWcrM
+
+VAULT FROM THE EXAMPLE TO QUICLY START TIMELINE WITH INTERPRETATIONS: https://github.com/MansurYa/Obsidian-vault-dementation-storage-plugin-timelines-with-interpretation
 
 1. Add the `timeline` tag to the note, either in the YAML frontmatter or somewhere else (a note without a timeline tag is ignored when building a timeline).
 2. or a timeline HTML comment for static rendering.
 
 ### Using a Timeline code block for dynamic rendering
 
-Create the following code block where a timeline is to be inserted using: `timeline` or `timeline-vis`
+Create the following code block where a timeline is to be inserted using: `timeline` or `timeline-vis` or `timeline-with-interpretations`
 
 ![example](https://raw.githubusercontent.com/Darakah/obsidian-timelines/main/images/example_1.png)
 
@@ -43,7 +57,7 @@ The note will be ignored in the following cases:
 ## Timeline Event Properties
 
 Timeline events must specify the following: 
-- a valid date, YEAR-MONTH-DAY-MINUTES (check info section below for more details)
+- a valid date, YEAR-MONTH-DAY-HOURS:MINUTES (check info section below for more details)
 - a valid class, specifically `ob-timelines` must be specified.
 All other fields are optional.
 Invalid timeline events will be skipped.
@@ -96,12 +110,12 @@ A timeline entry can be created using a `<span></span>` or `<div></div>` tag, wi
 ```html
 <span 
 	  class='ob-timelines' 
-	  data-date='2000-10-10-00' 
+	  data-date='2000-10-10' 
 	  data-title='Another Event' 
 	  data-class='orange' 
 	  data-img = 'Timeline Example/Timeline_2.jpg' 
 	  data-type='range' 
-	  data-end='2000-10-20-00'> 
+	  data-end='2000-10-20'> 
 	A second event! (this would be used as the description for the timeline event card)
 </span>
 ```
@@ -121,23 +135,52 @@ Timeline span and div entries (.ob-timelines class) are hidden in preview by def
 ```
 Using the above snippet, a span like this: 
 ```html
-<span class='ob-timelines' data-date='1499-03-28-00' data-title="An example"></span>
+<span class='ob-timelines' data-date='1499-03-28' data-title="An example"></span>
 ```
 would be rendered as: 
 <img width="228" alt="image" src="https://user-images.githubusercontent.com/808713/159139934-e5c7cb5a-da31-4a57-8100-946f944010a3.png">
-### Timeline Span block
+
+## Interpretations
+
+Interpretions are created in separate notes. To create an interjection to an event already described correctly in another article, you should:
+1) Create a note for interpretation
+2) Add tags to the beginning of the note 
+```Markdown
+---
+Tags: timeline, pr-lang
+---
+```
+3) Add span or div tag to this note
+```HTML
+<span 
+   class='ob-timelines-interpretation' 
+   data-date='2004-01-02-12:55' 
+   data-event_title='Event_title' 
+   data-class='pr-lang' 
+   data-interpretation_number='3'
+   data-title='Interpretation_title'
+   > 
+</span>
+```
+
+### Timeline with interpretations settings
+- You can customize the display for yourself.
+![Timeline with interpretations settings](https://raw.githubusercontent.com/MansurYa/obsidian-timeline-with-interpretations/main/images/Timeline%20with%20interpretations%20settings.png)
+
+## Timeline Span block
 - Hidden in preview by default in order to keep the note clean
 
 ### Date
 - The most important and essential info, if it is not valid the note will be ignored
 
 - Valid date format: 
-  - `YEAR-MONTH-DAY-HOUR`
-  - Only integers (numbers) are allowed in the date other then the 4 seperators `-` used to distinguish the different groups
-  - The length of each element i.e. `YEAR` can be of any length for example `123456789`
-  - The same applies to MONTH, DAY and HOUR. this means **if your input time is not valid the plugin will not check that**. Why this choice? If this plugin is used for a fantasy setup where the # of month are not only 12 for example.
-  - ALL 4 GROUPS must be specified however if they don't exist / not want to be shown replace them with a zero. For example if an event only has the year and the month it can be written as follows `2300-02-00-00` this will be rendered on the timeline as `2300-02` (the trailing zeros will be removed). For only a year `2300-00-00-00` -> `2300`
-  - IMPORTANT: the sorting is based on the date being converted to an integer after parsing out the `-` this means to get the proper sorting, if minutes are not added you need to replace with `00` (the maximum number of integer for that date category.
+  - `YEAR-MONTH-DAY-HOURS:MINUTES` or `YEAR-MONTH-DAY` or `-YEAR-MONTH-DAY-HOURS:MINUTES` or `-YEAR-MONTH-DAY`
+  - Here, the YEAR in front of which the `-` symbol stands will be interpreted as the YEAR of BC, and without a sign the YEAR will be integrated as AD
+  - YEAR may range from -9999 to 9999 for example `-1234`
+  - MONTH may range from 01 to 12 for example `05`
+  - DAY and HOUR and MINUTES may range from 00 to 99 for example
+  - Exemples: `2004-04-02-13:40` or `2004-04-02` or `-2004-04-02-13:40` or `-2004-04-02`
+  - **if your input time is not valid the plugin will not check that**
 
 ### Title:
   - Optional
@@ -157,8 +200,26 @@ would be rendered as:
   - Optional
   - Adds the applied css class to the note card associated with this span info block
 
+## Timeline Interpretation Span block
+- Hidden in preview by default in order to keep the note clean
+
+### Date
+- The date of the event should coincide with the date of the interpretation, and in general the rules are the same
+
+### Event_title
+- The name of the event for which this note is interpretation. That is, the Title in event should present the Event-title in interpretation
+
+### interpretation_number
+- Whole chili. They collectively determine the order of interpretation
+
+### Title
+  - Optional
+  - if the title is not present, it is assumed that `Interpretation №{interpretation_number}`
 
 ## Release Notes
+
+### V0.4.0
+- Adding timeline with interpretations
 
 ### V0.3.7
 - Description from frontmatter
