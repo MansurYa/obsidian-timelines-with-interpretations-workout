@@ -4,6 +4,7 @@
     "description": "Create a timeline view of all notes with the specified combination of tags",
     "main": "main.js",
     "scripts": {
+        "test": "jest",
         "dev": "rollup --config rollup.config.js -w",
         "build": "rollup --config rollup.config.js"
     },
@@ -14,11 +15,14 @@
         "@rollup/plugin-commonjs": "^15.1.0",
         "@rollup/plugin-node-resolve": "^9.0.0",
         "@rollup/plugin-typescript": "^6.0.0",
+        "@types/jest": "^29.5.12",
         "@types/node": "^14.14.2",
+        "jest": "^29.7.0",
         "obsidian": "latest",
         "rollup": "^2.32.1",
+        "ts-jest": "^29.1.2",
         "tslib": "^2.0.3",
-        "typescript": "^5.0.4"
+        "typescript": "^5.3.3"
     },
     "dependencies": {
         "rollup-plugin-styles": "^4.0.0",
